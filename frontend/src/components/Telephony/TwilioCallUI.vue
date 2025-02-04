@@ -387,6 +387,11 @@ async function makeOutgoingCall(number) {
 
       _call.on('messageReceived', (message) => {
         let info = message.content
+
+        if (info.CallStatus == 'initiated') {
+          return
+        }
+
         callStatus.value = info.CallStatus
 
         log.value = `Call status: ${info.CallStatus}`

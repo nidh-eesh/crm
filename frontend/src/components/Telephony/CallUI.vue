@@ -128,7 +128,6 @@ watch(
       }
 
       if (twilioValue || exotelValue) {
-        callMedium.value = 'Twilio'
         setMakeCall(makeCall)
       }
     }),
