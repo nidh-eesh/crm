@@ -50,11 +50,6 @@
         v-if="document.actions?.length"
         :actions="document.actions"
       />
-      <Button
-        :label="__('Convert')"
-        variant="solid"
-        @click="showConvertToDealModal = true"
-      />
     </div>
   </div>
   <div v-if="doc.name" class="flex h-full overflow-hidden">
