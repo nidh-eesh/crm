@@ -73,6 +73,12 @@
         <span>{{ __('New Message') }}</span>
       </Button>
     </div>
+    <Button v-else-if="title == 'SMS'" variant="solid" @click="smsBox.show()">
+      <template #prefix>
+        <FeatherIcon name="plus" class="h-4 w-4" />
+      </template>
+      <span>{{ __('New SMS') }}</span>
+    </Button>
     <Dropdown v-else :options="defaultActions" @click.stop>
       <template v-slot="{ open }">
         <Button variant="solid" class="flex items-center gap-1">
@@ -100,6 +106,7 @@ import NoteIcon from '@/components/Icons/NoteIcon.vue'
 import TaskIcon from '@/components/Icons/TaskIcon.vue'
 import AttachmentIcon from '@/components/Icons/AttachmentIcon.vue'
 import WhatsAppIcon from '@/components/Icons/WhatsAppIcon.vue'
+import SmsIcon from '@/components/Icons/SmsIcon.vue'
 import { globalStore } from '@/stores/global'
 import { whatsappEnabled, callEnabled } from '@/composables/settings'
 import { Dropdown } from 'frappe-ui'
@@ -112,6 +119,7 @@ const props = defineProps({
   modalRef: Object,
   emailBox: Object,
   whatsappBox: Object,
+  smsBox: Object,
 })
 
 const { makeCall } = globalStore()
@@ -126,6 +134,14 @@ const defaultActions = computed(() => {
       icon: h(Email2Icon, { class: 'h-4 w-4' }),
       label: __('New Email'),
       onClick: () => (props.emailBox.show = true),
+    },
+    {
+      icon: h(SmsIcon, { class: 'h-4 w-4' }),
+      label: __('New SMS'),
+      onClick: () => {
+        tabIndex.value = getTabIndex('SMS')
+        setTimeout(() => props.smsBox?.show?.(), 0)
+      },
     },
     {
       icon: h(CommentIcon, { class: 'h-4 w-4' }),
