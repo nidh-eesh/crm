@@ -79,9 +79,9 @@ def send_sms_message(reference_doctype: str, reference_name: str, message: str, 
 @frappe.whitelist(allow_guest=True)
 def receive_sms():
 
-	from_number = str(frappe.form_dict.get("From"))
-	to_number = str(frappe.form_dict.get("To"))
-	body = str(frappe.form_dict.get("Body"))
+	from_number = "+918129026864"
+	to_number = "+918129026864"
+	body = "Test SMS from Frappe"
 
 	# Try to resolve the lead in as few DB hits as possible (fetch both name & lead_name)
 	lead_row = frappe.db.get_value(

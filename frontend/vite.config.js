@@ -124,6 +124,23 @@ export default defineConfig({
     virtualStubPlugin,
   ],
   resolve: { alias },
+  // Ensure dev server runs on a fixed port and proxies API calls to Frappe inside Docker
+  server: {
+    host: true,
+    port: 8080,
+    proxy: (() => {
+      // Prefer env-defined backend if provided; default to service name in docker network
+      const target = process.env.BACKEND_URL || process.env.FRAPPE_URL || 'http://frappe-crm:8000'
+      return {
+        '/api': { target, changeOrigin: true, secure: false },
+        '/assets': { target, changeOrigin: true, secure: false },
+        '/files': { target, changeOrigin: true, secure: false },
+        '/app': { target, changeOrigin: true, secure: false },
+        '/login': { target, changeOrigin: true, secure: false },
+        '/socket.io': { target, ws: true, changeOrigin: true, secure: false },
+      }
+    })(),
+  },
   optimizeDeps: {
     include: [
       'feather-icons',
